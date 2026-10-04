@@ -1,0 +1,10 @@
+{
+  "version": "SSE_SZSE_2026_ANNOUNCED_SCHEDULE",
+  "years": {
+    "2026": {"closed_ranges": [["20260101","20260103"],["20260215","20260223"],["20260404","20260406"],["20260501","20260505"],["20260619","20260621"],["20260925","20260927"],["20261001","20261007"]]}
+  },
+  "weekends_closed": true,
+  "sources": ["https://www.sse.com.cn/disclosure/announcement/general/c/c_20251222_10802507.shtml", "https://www.sse.com.cn/disclosure/announcement/general/c/c_20260915_10832273.shtml"],
+  "verified_on": "20261004",
+  "limitation": "Announced schedule only; unknown years or exceptional closures need renewed verification. Never infer a missing bar from this schedule."
+}
