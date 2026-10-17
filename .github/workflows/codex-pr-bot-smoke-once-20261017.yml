@@ -1,0 +1,41 @@
+name: Codex PR bot trigger smoke (one shot)
+
+on:
+  push:
+    branches:
+      - validation/codex-actions-bot-smoke-20261017
+    paths:
+      - .github/workflows/codex-pr-bot-smoke-once-20261017.yml
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  one-shot-comment:
+    if: github.repository == 'liuwei99899/quant'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Post a single Codex review trigger as github-actions bot
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const issue_number = 1;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner, repo, issue_number, per_page: 100
+            });
+            const alreadyPosted = comments.some(c =>
+              c.user?.login === 'github-actions[bot]' &&
+              c.body?.trim() === '@codex review'
+            );
+            if (alreadyPosted) {
+              core.info('One-shot smoke already posted by github-actions[bot]; not repeating.');
+              return;
+            }
+            const response = await github.rest.issues.createComment({
+              owner, repo, issue_number, body: '@codex review'
+            });
+            core.info('Posted one review trigger. Comment id: ' + response.data.id);
